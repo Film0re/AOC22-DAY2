@@ -5,13 +5,21 @@
 
 
 def main():
-    strategy_guide = {"a": "rock",  # X
-                      "b": "paper",  # Y
-                      "c": "scissors"}  # z
+    decrypt = {"A": "X",  # X
+               "B": "Y",  # Y
+               "C": "Z"}  # z
 
     scoring = {"X": 1,
                "Y": 2,
                "Z": 3}
+
+    # Rock = X (A)
+    # Paper = Y (B)
+    # Scissors = Z (C)
+
+    x_beats_y = {"X": "Z",  # Rock beats paper
+                 "Y": "X",
+                 "Z": "Y"}
 
     with open("input.txt") as file:
         lines = file.readlines()
@@ -22,13 +30,17 @@ def main():
         line = line.strip("\n")
         move_array = line.split(" ")
 
-        opponent_move = move_array[0]
+        opponent_move = decrypt[move_array[0]]
         my_move = move_array[1]
 
-        
+        total_score += scoring[my_move]  # add point value for the move I played
+
+        if my_move == opponent_move:
+            total_score += 3  # 3 points for a tie
+        elif x_beats_y[my_move] == opponent_move:
+            total_score += 6  # 6 points for a win
 
     print(total_score)
-
 
 
 # Press the green button in the gutter to run the script.
